@@ -4,22 +4,29 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import ErrorIcon from '@mui/icons-material/Error';
 
+import { updateQuestionError, updateQuestionValue } from 'slices/assessment-questions.slice';
+import { useAppDispatch } from '../settings/hook';
+
 interface RatingQuestionProps {
   id: number,
   title: string;
   isRequired?: boolean;
   hasError?: boolean;
+  value?: number
 }
 
-const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, hasError }) => {
-  const [value, setValue] = React.useState('female');
+const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, hasError, value }) => {
+  const dispatch = useAppDispatch();
 
   const handleChange = (event: any) => {
-    setValue(event.target.value);
+    const value = parseInt(event.target.value);
+    dispatch(updateQuestionValue({ id, value }));
+    dispatch(updateQuestionError({ id, hasError: false }));
   };
 
   return (
-    <div className={`p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${isRequired && hasError && 'border border-red-500'}`}>
+    <div className={`p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${isRequired && hasError &&
+    'border border-red-500'}`}>
       <div className="text-lg mb-2">
         {id}. {title} {isRequired && <span className="text-red-600">*</span>}
       </div>
@@ -29,9 +36,9 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, 
         <RadioGroup
           aria-label="option"
           name="controlled-radio-buttons-group"
-          value={value}
+          value={value || -1}
           onChange={handleChange}
-          sx={{ flexDirection: "row", justifyContent: "space-around" }}
+          sx={{ flexDirection: 'row', justifyContent: 'space-around' }}
           className="w-2/3 md:w-1/2"
         >
           {
@@ -53,7 +60,7 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, 
       }
     </div>
   );
-}
+};
 
 function Options(n: number) {
   const options = [];
@@ -61,8 +68,8 @@ function Options(n: number) {
     options.push(
       <FormControlLabel
         style={{ margin: 0, padding: 0 }}
-        labelPlacement="top" value={i} control={<Radio />} label={i} key={`key-${i}`}/>
-    )
+        labelPlacement="top" value={i} control={<Radio/>} label={i} key={`key-${i}`}/>
+    );
   }
 
   return options;

@@ -1,9 +1,9 @@
 export enum LifeType {
-  Worship,
-  MakeDisciples,
-  Fellowship,
-  Serve,
-  Missionary
+  Worship = 'Worship',
+  MakeDisciples = 'MakeDisciples',
+  Fellowship = 'Fellowship',
+  Serve = 'Serve',
+  Missionary = 'Missionary'
 }
 
 export const questions = [
