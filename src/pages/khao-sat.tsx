@@ -12,10 +12,11 @@ import { getQuestions } from 'slices/assessment-questions.slice';
 import Information from '../components/Information';
 import { LifeTitleNote, LifeType } from '../constant';
 import ErrorIcon from '@mui/icons-material/Error';
+import request from '../utils/request';
 
 const AssessmentPage: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState(0);
-  const [ showErrorDialog, setShowErrorDialog] = useState(false);
+  const [ showErrorDialog, setShowErrorDialog ] = useState(false);
 
   const questions = useAppSelector(getQuestions);
   const userAssess = useAppSelector(getUserAssess);
@@ -90,12 +91,38 @@ const AssessmentPage: React.FC = () => {
     });
 
     if (!hasError && userAssess.name) {
+      let date = new Date().toLocaleString('vi-VN');
       localStorage.setItem('assessment-questions', JSON.stringify(questions));
       localStorage.setItem('assessment-result', JSON.stringify(result));
       localStorage.setItem('assessment-name', userAssess.name);
-      localStorage.setItem('assessment-dateSubmitted', new Date().toLocaleString('vi-VN'));
+      localStorage.setItem('assessment-dateSubmitted', date);
 
-      window.open('/', '_self');
+      const data: any = Object.values(result).reduce((acc: any, current: any) => {
+        acc[current.type] = {
+          ...(acc[current.type] || {}),
+          type: current.type,
+          mark: (acc[current.type]?.mark || 0) + current.mark
+        };
+        return acc;
+      }, {});
+
+      request.post('api/sheet', {
+        name: userAssess.name,
+        worship: data[LifeType.Worship]?.mark,
+        discipleship: data[LifeType.Discipleship]?.mark,
+        fellowship: data[LifeType.Fellowship]?.mark,
+        missionary: data[LifeType.Missionary]?.mark,
+        evangelism: data[LifeType.Evangelism]?.mark,
+        date
+      })
+        .then((response) => {
+          console.log(response.data?.data);
+          window.open('/', '_self');
+        })
+        .catch((error) => {
+          console.log(error?.response?.data);
+          alert('Oops! Something went wrong!')
+        });
     } else {
       setShowErrorDialog(true);
     }
@@ -172,7 +199,8 @@ const AssessmentPage: React.FC = () => {
       </div>
 
       <Dialog onClose={() => setShowErrorDialog(false)} open={showErrorDialog} sx={{ top: -400 }}>
-        <DialogTitle className="text-md text-red-600"><ErrorIcon className="mr-2"/><span>Hãy trả lời tất cả câu hỏi nào!</span></DialogTitle>
+        <DialogTitle className="text-md text-red-600"><ErrorIcon
+          className="mr-2"/><span>Hãy trả lời tất cả câu hỏi nào!</span></DialogTitle>
       </Dialog>
     </div>
   );
