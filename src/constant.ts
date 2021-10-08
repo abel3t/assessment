@@ -22,6 +22,16 @@ export const LifeTitleShort = {
   [LifeType.Missionary]: 'Truyền giáo'
 };
 
+export  enum UserWasAssessedType {
+  Myself,
+  Other
+}
+
+export const UserWasAssessedTitle = {
+  [UserWasAssessedType.Myself]: 'Chính tôi',
+  [UserWasAssessedType.Other]: 'Người khác, điền tên',
+}
+
 
 export const questions = [
   {

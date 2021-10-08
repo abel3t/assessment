@@ -6,17 +6,23 @@ import {
 import type { RootState } from 'settings/store';
 import { questions } from '../constant';
 
-export type CounterState = {
+export type AssessmentQuestionState = {
   questions: any,
+  name: string,
+  userAssess: string,
+  userWasAssessed: string,
   result: any
 };
 
-const initialState: CounterState = {
+const initialState: AssessmentQuestionState = {
   questions: questions.reduce((acc: any, question) => {
     acc[question.id] = { ...question };
     return acc;
   }, {}),
-  result: null
+  result: null,
+  name: '',
+  userAssess: '',
+  userWasAssessed: ''
 };
 
 export const assessmentQuestionSlice = createSlice({
@@ -41,6 +47,15 @@ export const assessmentQuestionSlice = createSlice({
     updateResult: (state, action: PayloadAction<any>) => {
       state.result = action.payload;
     },
+    updateName: (state, action: PayloadAction<any>) => {
+      state.name = action.payload;
+    },
+    updateUserAssess: (state, action: PayloadAction<any>) => {
+      state.name = action.payload;
+    },
+    updateUserWasAssessed: (state, action: PayloadAction<any>) => {
+      state.name = action.payload;
+    }
   }
 });
 
