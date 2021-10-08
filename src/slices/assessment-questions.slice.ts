@@ -29,7 +29,7 @@ export const assessmentQuestionSlice = createSlice({
     updateQuestionValue: (state, action: PayloadAction<any>) => {
       const { id, value } = action.payload;
       if (state.questions[id]) {
-        state.questions[id] = { ...state.questions[id], value };
+        state.questions[id] = { ...state.questions[id], value, hasError: false };
       }
     },
     updateQuestionError: (state, action: PayloadAction<any>) => {
