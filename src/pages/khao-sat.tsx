@@ -13,6 +13,10 @@ const AssessmentPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage])
+
+  useEffect(() => {
     const defaultQuestions = JSON.parse(localStorage.getItem('assessment-questions') || 'null');
     if (defaultQuestions) {
       dispatch(updateQuestions(defaultQuestions));
