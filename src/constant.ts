@@ -6,6 +6,14 @@ export enum LifeType {
   Missionary = 'Missionary'
 }
 
+export const LifeTitle = {
+  [LifeType.Worship]: 'Đời sống thờ phượng',
+  [LifeType.MakeDisciples]: 'Đời sống môn đồ hoá',
+  [LifeType.Fellowship]: 'Đời sống thông công',
+  [LifeType.Serve]: 'Đời sống phục vụ',
+  [LifeType.Missionary]: 'Đời sống truyền giáo'
+};
+
 export const questions = [
   {
     id: 1,
