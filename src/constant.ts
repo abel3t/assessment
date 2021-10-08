@@ -1,37 +1,44 @@
 export enum LifeType {
-  Worship = 'Worship',
-  MakeDisciples = 'MakeDisciples',
-  Fellowship = 'Fellowship',
-  Serve = 'Serve',
-  Missionary = 'Missionary'
+  Worship,
+  Discipleship,
+  Fellowship,
+  Missionary,
+  Evangelism
 }
 
 export const LifeTitle = {
   [LifeType.Worship]: 'Đời sống thờ phượng',
-  [LifeType.MakeDisciples]: 'Đời sống môn đồ hoá',
+  [LifeType.Discipleship]: 'Đời sống môn đồ hoá',
   [LifeType.Fellowship]: 'Đời sống thông công',
-  [LifeType.Serve]: 'Đời sống phục vụ',
-  [LifeType.Missionary]: 'Đời sống truyền giáo'
+  [LifeType.Missionary]: 'Đời sống phục vụ',
+  [LifeType.Evangelism]: 'Đời sống truyền giáo'
 };
 
 export const LifeTitleShort = {
   [LifeType.Worship]: 'Thờ phượng',
-  [LifeType.MakeDisciples]: 'Môn đồ hoá',
+  [LifeType.Discipleship]: 'Môn đồ hoá',
   [LifeType.Fellowship]: 'Thông công',
-  [LifeType.Serve]: 'Phục vụ',
-  [LifeType.Missionary]: 'Truyền giáo'
+  [LifeType.Missionary]: 'Phục vụ',
+  [LifeType.Evangelism]: 'Truyền giáo'
 };
 
-export  enum UserWasAssessedType {
+export const LifeTitleNote = {
+  [LifeType.Worship]: 'Đời sống thờ phượng hiểu theo cách đơn giản nhất là chất lượng mối quan hệ giữa bạn với Chúa Jêsus.',
+  [LifeType.Discipleship]: 'Đời sống môn đồ hóa hiểu đơn giản nhất là hành trình bạn tin Chúa và trở nên giống Chúa Jêsus càng hơn mỗi ngày.',
+  [LifeType.Fellowship]: 'Đời sống thông công hiểu theo cách đơn giản nhất là chất lượng trong mối quan hệ của bạn với anh chị em trong Chúa.',
+  [LifeType.Missionary]: 'Đời sống phục vụ hiểu theo cách đơn giản nhất là việc sử dụng kiến thức, kỹ năng, ân tứ để làm ích cho người khác, cho nhóm nhỏ, cho Hội Thánh.',
+  [LifeType.Evangelism]: 'Đời sống truyền giáo hiểu theo cách đơn giản nhất là việc quan tâm đến những người chưa biết về Chúa Jêsus xung quanh mình và tìm cách để họ được biết và tin nhận Chúa Jêsus.'
+};
+
+export enum UserWasAssessedType {
   Myself,
   Other
 }
 
 export const UserWasAssessedTitle = {
   [UserWasAssessedType.Myself]: 'Chính tôi',
-  [UserWasAssessedType.Other]: 'Người khác, điền tên',
-}
-
+  [UserWasAssessedType.Other]: 'Người khác, điền tên'
+};
 
 export const questions = [
   {
@@ -79,41 +86,43 @@ export const questions = [
   {
     id: 8,
     title: 'Tôi dễ dàng nhận ra và xưng nhận bất cứ điều gì trong suy nghĩ, hành vi, tâm tánh của tôi mà không giống với Chúa Jêsus',
-    type: LifeType.MakeDisciples,
+    type: LifeType.Discipleship,
     isRequired: true
   },
   {
     id: 9,
     title: 'Cách tôi sử dụng tài chính, tiền bạc thể hiện rằng tôi nghĩ về Chúa và về người khác nhiều hơn chính mình',
-    type: LifeType.MakeDisciples,
+    type: LifeType.Discipleship,
     isRequired: true
   },
   {
     id: 10,
     title: 'Tôi để cho Lời Chúa (Kinh Thánh) hướng dẫn suy nghĩ và thay đổi hành động của mình',
-    type: LifeType.MakeDisciples,
+    type: LifeType.Discipleship,
     isRequired: true
   },
   {
     id: 11,
     title: 'Tôi có thể ca ngợi Chúa trong những khó khăn, nghịch cảnh, thất bại và xem đó là cơ hội để trưởng thành thay vì phàn nàn',
-    type: LifeType.MakeDisciples,
+    type: LifeType.Discipleship,
     isRequired: true
-  }, {
+  },
+  {
     id: 12,
     title: 'Khi bị cám dỗ để hành động theo bản năng của mình, tôi có thể đăng ra quyết định làm theo điều mình biết Chúa đẹp lòng',
-    type: LifeType.MakeDisciples,
+    type: LifeType.Discipleship,
     isRequired: true
-  }, {
+  },
+  {
     id: 13,
     title: 'Tôi kinh nghiệm rằng lời cầu nguyện đã thay đổi cách nhìn và cách sống của tôi',
-    type: LifeType.MakeDisciples,
+    type: LifeType.Discipleship,
     isRequired: true
   },
   {
     id: 14,
     title: 'Tôi đang xây dựng và duy trì những thói quen giúp tôi phát triển đời sống tin kính giống Chúa Jêsus',
-    type: LifeType.MakeDisciples,
+    type: LifeType.Discipleship,
     isRequired: true
   },
   {
@@ -161,85 +170,85 @@ export const questions = [
   {
     id: 22,
     title: 'Tôi thường xuyên và sẵn sàng dành thời gian để phục vụ Chúa, anh chị em, nhóm nhỏ, Hội Thánh',
-    type: LifeType.Serve,
+    type: LifeType.Missionary,
     isRequired: true
   },
   {
     id: 23,
     title: 'Tôi đang có vai trò, đang phục vụ Chúa đúng với những ấn tứ, sự thôi thúc Chúa ban cho tôi\n',
-    type: LifeType.Serve,
+    type: LifeType.Missionary,
     isRequired: true
   },
   {
     id: 24,
     title: 'Tôi luôn quan tâm rằng đời sống của mình đang mang lại ích lợi thế nào cho Vương Quốc của Chúa (Hội Thánh)',
-    type: LifeType.Serve,
+    type: LifeType.Missionary,
     isRequired: true
   },
   {
     id: 25,
     title: 'Tôi luôn suy nghĩ, tìm cách để phục vụ hiệu quả hơn với những khả năng, ân tứ, kỹ năng Chúa ban cho mình',
-    type: LifeType.Serve,
+    type: LifeType.Missionary,
     isRequired: true
   },
   {
     id: 26,
     title: 'Tôi thích việc phục vụ người khác (đáp ứng nhu cầu của người khác) mà không đòi hỏi nhận lại điều gì',
-    type: LifeType.Serve,
+    type: LifeType.Missionary,
     isRequired: true
   },
   {
     id: 27,
     title: 'Những anh em biết tôi sẽ đồng ý rằng đời sống của tôi là đời sống ban cho nhiều hơn nhận lãnh',
-    type: LifeType.Serve,
+    type: LifeType.Missionary,
     isRequired: true
   },
   {
     id: 28,
     title: 'Tôi thấy những gì mình có, kể cả những kinh nghiệm, những thất bại, lời chứng, nỗi đau,... đều là cơ hội để tôi giúp đỡ người khác',
-    type: LifeType.Serve,
+    type: LifeType.Missionary,
     isRequired: true
   },
   {
     id: 29,
     title: 'Theo tôi việc chia sẻ về niềm tin nơi Chúa Jêsus là trách nhiệm cá nhân của mỗi người',
-    type: LifeType.Missionary,
+    type: LifeType.Evangelism,
     isRequired: true
   },
   {
     id: 30,
     title: 'Tôi luôn tìm cách xây dựng mối quan hệ với những người chưa biết về Chúa Jêsus',
-    type: LifeType.Missionary,
+    type: LifeType.Evangelism,
     isRequired: true
   },
   {
     id: 31,
     title: 'Tôi thường xuyên nhớ những cái tên của người chưa tin Chúa và cầu nguyện cho họ',
-    type: LifeType.Missionary,
+    type: LifeType.Evangelism,
     isRequired: true
   },
   {
     id: 32,
     title: 'Tôi tự tin về khả năng chia sẻ niềm tin của mình',
-    type: LifeType.Missionary,
+    type: LifeType.Evangelism,
     isRequired: true
   },
   {
     id: 33,
     title: 'Tấm lòng tôi tràn đầy nhiệt huyết chia sẻ về Chúa cho những người chưa biết về Chúa',
-    type: LifeType.Missionary,
+    type: LifeType.Evangelism,
     isRequired: true
   },
   {
     id: 34,
     title: 'Khi nói chuyện với người chưa tin Chúa thì tôi thường nhắc tới Chúa hoặc nhắc tới đời sống đức tin của mình như Hội Thánh, nhóm nhỏ',
-    type: LifeType.Missionary,
+    type: LifeType.Evangelism,
     isRequired: true
   },
   {
     id: 35,
     title: 'Tôi sẵn sàng để đi đến bất kỳ nơi nào Chúa gọi tôi, và dùng tôi để chia sẻ về đức tin nơi Ngài',
-    type: LifeType.Missionary,
+    type: LifeType.Evangelism,
     isRequired: true
   }
 ];

@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from 'settings/hook';
 import { updateQuestionError, updateQuestions } from 'slices/assessment-questions.slice';
 import { getQuestions } from 'slices/assessment-questions.slice';
 import Information from '../components/Information';
+import { LifeTitleNote, LifeType } from '../constant';
 
 const AssessmentPage: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState(0);
@@ -14,7 +15,7 @@ const AssessmentPage: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentPage])
+  }, [ currentPage ]);
 
   useEffect(() => {
     const defaultQuestions = JSON.parse(localStorage.getItem('assessment-questions') || 'null');
@@ -25,11 +26,27 @@ const AssessmentPage: React.FC = () => {
 
   const onClickPrev = () => {
     setCurrentPage(currentPage - 1);
-  }
+  };
 
   const onClickNext = () => {
-    setCurrentPage(currentPage + 1);
-  }
+    let hasError = false;
+    let result: any = {};
+    Object.values(questions)
+      .slice((currentPage - 1) * 7, currentPage * 7)
+      .forEach((question: any) => {
+        if (!question.value) {
+          hasError = true;
+          dispatch(updateQuestionError({ id: question.id, hasError: true }));
+          result[question.id] = { type: question.type, mark: 0 };
+        } else {
+          result[question.id] = { type: question.type, mark: question.value };
+        }
+      });
+
+    if (!hasError) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const onClickSubmit = () => {
     let hasError = false;
@@ -59,7 +76,7 @@ const AssessmentPage: React.FC = () => {
         {
           !currentPage && (
             <div>
-              <Information />
+              <Information/>
             </div>
           )
         }
@@ -73,8 +90,7 @@ const AssessmentPage: React.FC = () => {
                   Khảo sát sức khoẻ thuộc linh
                 </div>
                 <div className="p-2 md:p-3 lg:p-4 text-sm">
-                  Đời sống môn đồ hóa hiểu đơn giản nhất là hành trình bạn tin Chúa và trở nên giống Chúa Jêsus càng hơn mỗi
-                  ngày
+                  {LifeTitleNote[currentPage - 1 as LifeType]}
                 </div>
               </div>
 
@@ -106,7 +122,7 @@ const AssessmentPage: React.FC = () => {
           currentPage > 0 && currentPage < 5 && (
             <>
               <Button variant="contained" onClick={onClickPrev}>Prev</Button>
-              <Button variant="contained" onClick={onClickNext} style={{marginLeft: 10}}>Next</Button>
+              <Button variant="contained" onClick={onClickNext} style={{ marginLeft: 10 }}>Next</Button>
             </>
           )
         }
@@ -115,7 +131,7 @@ const AssessmentPage: React.FC = () => {
           currentPage == 5 && (
             <>
               <Button variant="contained" onClick={onClickPrev}>Prev</Button>
-              <Button variant="contained" onClick={onClickSubmit} style={{marginLeft: 10}}>Submit</Button>
+              <Button variant="contained" onClick={onClickSubmit} style={{ marginLeft: 10 }}>Submit</Button>
             </>
           )
         }

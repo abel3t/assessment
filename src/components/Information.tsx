@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Input } from '@mui/material';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
@@ -7,7 +6,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { UserWasAssessedTitle, UserWasAssessedType } from '../constant';
 
 const Information: React.FC = () => {
-  const dispatch = useDispatch();
   const [ userWasAssessed, setUserWasAssessed ] = useState(-1);
 
   const handleChange = (event: any) => {
