@@ -35,9 +35,7 @@ const IndexPage: NextPage = () => {
   return (
     <div className="p-2 sm:p-3 md:p-4 lg:p-5 flex flex-col justify-center items-center">
       <div className="w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white">
-        {!result && <div>
-          Chưa có kết quả
-        </div>}
+        {!result && <div className="mb-2"> Chưa có kết quả</div>}
 
         {result && (
           <div>
