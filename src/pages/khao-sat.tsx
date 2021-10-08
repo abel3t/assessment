@@ -69,7 +69,6 @@ const AssessmentPage: React.FC = () => {
     }
   };
 
-  console.log(currentPage);
   return (
     <div className="p-2 sm:p-3 md:p-4 lg:p-5 flex flex-col justify-center items-center">
       <div className="w-full md:w-3/4 lg:w-2/3">
@@ -94,9 +93,10 @@ const AssessmentPage: React.FC = () => {
                 </div>
               </div>
 
-              {Object.values(questions).slice((currentPage - 1) * 7, currentPage * 7).map((question: any) => {
+              {Object.values(questions).slice((currentPage - 1) * 7, currentPage * 7).map((question: any, index: number) => {
                 return (
                   <RatingQuestion
+                    index={index + 1}
                     id={question.id}
                     title={question.title}
                     isRequired={question.isRequired}

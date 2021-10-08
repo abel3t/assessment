@@ -50,11 +50,6 @@ const Information: React.FC = () => {
             style={{ margin: 0, padding: 0 }}
             value={UserWasAssessedType.Myself} control={<Radio/>}
             label={UserWasAssessedTitle[UserWasAssessedType.Myself]}/>
-
-          <FormControlLabel
-            style={{ margin: 0, padding: 0 }}
-            value={UserWasAssessedType.Other} control={<Radio/>}
-            label={UserWasAssessedTitle[UserWasAssessedType.Other]}/>
         </RadioGroup>
       </div>
     </div>

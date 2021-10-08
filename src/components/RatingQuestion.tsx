@@ -8,6 +8,7 @@ import { updateQuestionValue } from 'slices/assessment-questions.slice';
 import { useDispatch } from 'react-redux';
 
 interface RatingQuestionProps {
+  index: number,
   id: number,
   title: string;
   isRequired?: boolean;
@@ -15,7 +16,7 @@ interface RatingQuestionProps {
   value?: number
 }
 
-const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, hasError, value }) => {
+const RatingQuestion: React.FC<RatingQuestionProps> = ({ index, id, title, isRequired, hasError, value }) => {
   const dispatch = useDispatch();
 
   const handleChange = (event: any) => {
@@ -26,7 +27,7 @@ const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, 
     <div className={`p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${isRequired && hasError &&
     'border border-red-500'}`}>
       <div className="text-lg mb-2">
-        {id}. {title} {isRequired && <span className="text-red-600">*</span>}
+        {index}. {title} {isRequired && <span className="text-red-600">*</span>}
       </div>
 
       <div className="flex items-end justify-around">
