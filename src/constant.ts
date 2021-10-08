@@ -14,6 +14,15 @@ export const LifeTitle = {
   [LifeType.Missionary]: 'Đời sống truyền giáo'
 };
 
+export const LifeTitleShort = {
+  [LifeType.Worship]: 'Thờ phượng',
+  [LifeType.MakeDisciples]: 'Môn đồ hoá',
+  [LifeType.Fellowship]: 'Thông công',
+  [LifeType.Serve]: 'Phục vụ',
+  [LifeType.Missionary]: 'Truyền giáo'
+};
+
+
 export const questions = [
   {
     id: 1,

@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { LifeTitle, LifeType } from '../constant';
+import { LifeTitle, LifeTitleShort, LifeType } from '../constant';
 
 const IndexPage: NextPage = () => {
   const [ result, setResult ]: [ any, any ] = useState(null);
@@ -28,7 +28,7 @@ const IndexPage: NextPage = () => {
         return acc;
       }, {});
 
-      setResult(Object.values(data).map((x: any) => ({...x, type: LifeTitle[x.type as LifeType] })));
+      setResult(Object.values(data));
     }
   }, []);
 
@@ -57,7 +57,7 @@ const IndexPage: NextPage = () => {
               <hr/>
 
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table aria-label="result table">
                   <TableHead>
                     <TableRow>
                       <TableCell align="left"><strong>Mảng</strong></TableCell>
@@ -68,12 +68,12 @@ const IndexPage: NextPage = () => {
                   <TableBody>
                     {result
                       .sort((a: any, b: any) => b.mark - a.mark)
-                      .map((row: any) => (
+                      .map((row: any, index: number) => (
                       <TableRow
-                        key={row.name}
+                        key={index}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                       >
-                        <TableCell align="left">{row.type}</TableCell>
+                        <TableCell align="left">{LifeTitle[row.type as LifeType]}</TableCell>
                         <TableCell align="left">{row.mark}</TableCell>
                         <TableCell align="left">{Advise(row.mark)}</TableCell>
                       </TableRow>
@@ -83,11 +83,11 @@ const IndexPage: NextPage = () => {
               </TableContainer>
 
             </div>
-            <div className="w-full" style={{ height: 500 }}>
+            <div className="w-full mt-3" id="chart-result">
               <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={result}>
+                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={result.map((x: any) => ({...x, type: LifeTitleShort[x.type as LifeType] }))}>
                   <PolarGrid/>
-                  <PolarAngleAxis dataKey="type"/>
+                  <PolarAngleAxis dataKey="type" fontSize="13"/>
                   <PolarRadiusAxis domain={[ 0, 35 ]}/>
                   <Tooltip/>
                   <Radar name="Result" dataKey="mark" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
