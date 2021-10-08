@@ -28,7 +28,7 @@ const Information: React.FC<InformationProps> = ({ userAssess }) => {
         <div className="text-lg mb-2">
           Người thực hiện đánh giá <span className="text-red-600">*</span>
         </div>
-        <div className="w-1/2">
+        <div className="w-2/3 md:w-1/2">
           <Input placeholder="Your answer" className="w-full" value={userAssess?.name || ''} onChange={onChangeUserAssess}/>
         </div>
 

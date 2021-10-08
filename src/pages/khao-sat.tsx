@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Dialog, DialogTitle } from '@mui/material';
 
 import RatingQuestion from 'components/RatingQuestion';
 import { useAppDispatch, useAppSelector } from 'settings/hook';
@@ -11,9 +11,11 @@ import {
 import { getQuestions } from 'slices/assessment-questions.slice';
 import Information from '../components/Information';
 import { LifeTitleNote, LifeType } from '../constant';
+import ErrorIcon from '@mui/icons-material/Error';
 
 const AssessmentPage: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState(0);
+  const [ showErrorDialog, setShowErrorDialog] = useState(false);
 
   const questions = useAppSelector(getQuestions);
   const userAssess = useAppSelector(getUserAssess);
@@ -45,6 +47,7 @@ const AssessmentPage: React.FC = () => {
     if (!currentPage) {
       if (!userAssess.name) {
         dispatch(updateUserAssess({ ...userAssess, hasError: true }));
+        setShowErrorDialog(true);
       } else {
         setCurrentPage(currentPage + 1);
       }
@@ -68,6 +71,8 @@ const AssessmentPage: React.FC = () => {
 
     if (!hasError) {
       setCurrentPage(currentPage + 1);
+    } else {
+      setShowErrorDialog(true);
     }
   };
 
@@ -91,6 +96,8 @@ const AssessmentPage: React.FC = () => {
       localStorage.setItem('assessment-dateSubmitted', new Date().toLocaleString('vi-VN'));
 
       window.open('/', '_self');
+    } else {
+      setShowErrorDialog(true);
     }
   };
 
@@ -163,6 +170,10 @@ const AssessmentPage: React.FC = () => {
           )
         }
       </div>
+
+      <Dialog onClose={() => setShowErrorDialog(false)} open={showErrorDialog} sx={{ top: -400 }}>
+        <DialogTitle className="text-md text-red-600"><ErrorIcon className="mr-2"/><span>Hãy trả lời tất cả câu hỏi nào!</span></DialogTitle>
+      </Dialog>
     </div>
   );
 };
