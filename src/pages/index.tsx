@@ -88,11 +88,11 @@ const IndexPage: NextPage = () => {
               </TableContainer>
 
             </div>
-            <div className="w-full mt-3" id="chart-result">
+            <div className="mt-3" id="chart-result">
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={result.map((x: any) => ({...x, type: LifeTitleShort[x.type as LifeType] }))}>
                   <PolarGrid/>
-                  <PolarAngleAxis dataKey="type" fontSize="13"/>
+                  <PolarAngleAxis dataKey="type" fontSize="10"/>
                   <PolarRadiusAxis domain={[ 0, 35 ]}/>
                   <Tooltip/>
                   <Radar name="Result" dataKey="mark" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>

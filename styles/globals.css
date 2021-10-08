@@ -17,9 +17,11 @@ a {
     box-sizing: border-box;
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (min-width: 300px) {
     #chart-result {
-        height: 300px;
+        height: 200px;
+        width: 100%;
+        margin: 0 auto;
     }
 }
 
