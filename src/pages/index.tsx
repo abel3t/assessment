@@ -66,7 +66,9 @@ const IndexPage: NextPage = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {result.map((row: any) => (
+                    {result
+                      .sort((a: any, b: any) => b.mark - a.mark)
+                      .map((row: any) => (
                       <TableRow
                         key={row.name}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
