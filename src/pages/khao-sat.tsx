@@ -115,11 +115,11 @@ const AssessmentPage: React.FC = () => {
         evangelism: data[LifeType.Evangelism]?.mark,
         date
       })
-        .then((response) => {
+        .then((response: any) => {
           console.log(response.data?.data);
           window.open('/', '_self');
         })
-        .catch((error) => {
+        .catch((error: any) => {
           console.log(error?.response?.data);
           alert('Oops! Something went wrong!')
         });
