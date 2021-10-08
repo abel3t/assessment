@@ -8,10 +8,7 @@ import { questions } from '../constant';
 
 export type AssessmentQuestionState = {
   questions: any,
-  name: string,
-  userAssess: string,
-  userWasAssessed: string,
-  result: any
+  userAssess: Record<string, any>
 };
 
 const initialState: AssessmentQuestionState = {
@@ -19,10 +16,7 @@ const initialState: AssessmentQuestionState = {
     acc[question.id] = { ...question };
     return acc;
   }, {}),
-  result: null,
-  name: '',
-  userAssess: '',
-  userWasAssessed: ''
+  userAssess: {}
 };
 
 export const assessmentQuestionSlice = createSlice({
@@ -44,17 +38,8 @@ export const assessmentQuestionSlice = createSlice({
         state.questions[id] = { ...state.questions[id], hasError };
       }
     },
-    updateResult: (state, action: PayloadAction<any>) => {
-      state.result = action.payload;
-    },
-    updateName: (state, action: PayloadAction<any>) => {
-      state.name = action.payload;
-    },
     updateUserAssess: (state, action: PayloadAction<any>) => {
-      state.name = action.payload;
-    },
-    updateUserWasAssessed: (state, action: PayloadAction<any>) => {
-      state.name = action.payload;
+      state.userAssess = action.payload;
     }
   }
 });
@@ -63,9 +48,10 @@ export const {
   updateQuestionValue,
   updateQuestionError,
   updateQuestions,
-  updateResult
+  updateUserAssess
 } = assessmentQuestionSlice.actions;
 
 export const getQuestions = (state: RootState) => state.assessmentQuestion.questions;
+export const getUserAssess = (state: RootState) => state.assessmentQuestion.userAssess;
 
 export default assessmentQuestionSlice.reducer;

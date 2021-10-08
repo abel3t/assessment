@@ -3,14 +3,21 @@ import { Button } from '@mui/material';
 
 import RatingQuestion from 'components/RatingQuestion';
 import { useAppDispatch, useAppSelector } from 'settings/hook';
-import { updateQuestionError, updateQuestions } from 'slices/assessment-questions.slice';
+import {
+  getUserAssess,
+  updateQuestionError,
+  updateQuestions, updateUserAssess
+} from 'slices/assessment-questions.slice';
 import { getQuestions } from 'slices/assessment-questions.slice';
 import Information from '../components/Information';
 import { LifeTitleNote, LifeType } from '../constant';
 
 const AssessmentPage: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState(0);
+
   const questions = useAppSelector(getQuestions);
+  const userAssess = useAppSelector(getUserAssess);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,8 +26,14 @@ const AssessmentPage: React.FC = () => {
 
   useEffect(() => {
     const defaultQuestions = JSON.parse(localStorage.getItem('assessment-questions') || 'null');
+    const name = localStorage.getItem('assessment-name') || '';
+
     if (defaultQuestions) {
       dispatch(updateQuestions(defaultQuestions));
+    }
+
+    if (name) {
+      dispatch(updateUserAssess({ name }));
     }
   }, []);
 
@@ -29,6 +42,16 @@ const AssessmentPage: React.FC = () => {
   };
 
   const onClickNext = () => {
+    if (!currentPage) {
+      if (!userAssess.name) {
+        dispatch(updateUserAssess({ ...userAssess, hasError: true }))
+      } else {
+        setCurrentPage(currentPage + 1);
+      }
+
+      return;
+    }
+
     let hasError = false;
     let result: any = {};
     Object.values(questions)
@@ -61,9 +84,10 @@ const AssessmentPage: React.FC = () => {
       }
     });
 
-    if (!hasError) {
+    if (!hasError && userAssess.name) {
       localStorage.setItem('assessment-questions', JSON.stringify(questions));
       localStorage.setItem('assessment-result', JSON.stringify(result));
+      localStorage.setItem('assessment-name', userAssess.name)
 
       window.open('/', '_self');
     }
@@ -75,7 +99,7 @@ const AssessmentPage: React.FC = () => {
         {
           !currentPage && (
             <div>
-              <Information/>
+              <Information userAssess={userAssess} />
             </div>
           )
         }
@@ -93,19 +117,21 @@ const AssessmentPage: React.FC = () => {
                 </div>
               </div>
 
-              {Object.values(questions).slice((currentPage - 1) * 7, currentPage * 7).map((question: any, index: number) => {
-                return (
-                  <RatingQuestion
-                    index={index + 1}
-                    id={question.id}
-                    title={question.title}
-                    isRequired={question.isRequired}
-                    hasError={question.hasError}
-                    value={question.value}
-                    key={question.id}
-                  />
-                );
-              })}
+              {Object.values(questions)
+                .slice((currentPage - 1) * 7, currentPage * 7)
+                .map((question: any, index: number) => {
+                  return (
+                    <RatingQuestion
+                      index={index + 1}
+                      id={question.id}
+                      title={question.title}
+                      isRequired={question.isRequired}
+                      hasError={question.hasError}
+                      value={question.value}
+                      key={question.id}
+                    />
+                  );
+                })}
             </>
           )
         }
