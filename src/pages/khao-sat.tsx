@@ -44,7 +44,7 @@ const AssessmentPage: React.FC = () => {
   const onClickNext = () => {
     if (!currentPage) {
       if (!userAssess.name) {
-        dispatch(updateUserAssess({ ...userAssess, hasError: true }))
+        dispatch(updateUserAssess({ ...userAssess, hasError: true }));
       } else {
         setCurrentPage(currentPage + 1);
       }
@@ -87,7 +87,8 @@ const AssessmentPage: React.FC = () => {
     if (!hasError && userAssess.name) {
       localStorage.setItem('assessment-questions', JSON.stringify(questions));
       localStorage.setItem('assessment-result', JSON.stringify(result));
-      localStorage.setItem('assessment-name', userAssess.name)
+      localStorage.setItem('assessment-name', userAssess.name);
+      localStorage.setItem('assessment-dateSubmitted', new Date().toLocaleString('vi-VN'));
 
       window.open('/', '_self');
     }
@@ -99,7 +100,7 @@ const AssessmentPage: React.FC = () => {
         {
           !currentPage && (
             <div>
-              <Information userAssess={userAssess} />
+              <Information userAssess={userAssess}/>
             </div>
           )
         }

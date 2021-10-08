@@ -15,9 +15,16 @@ import { LifeTitle, LifeTitleShort, LifeType } from '../constant';
 
 const IndexPage: NextPage = () => {
   const [ result, setResult ]: [ any, any ] = useState(null);
+  const [dateSubmitted, setDateSubmitted] = useState('');
 
   useEffect(() => {
+    const date = localStorage.getItem('assessment-dateSubmitted');
     const result: any = JSON.parse(localStorage.getItem('assessment-result') || 'null');
+
+    if (date) {
+      setDateSubmitted(date);
+    }
+
     if (result) {
       const data: any = Object.values(result).reduce((acc: any, current: any) => {
         acc[current.type] = {
@@ -48,7 +55,7 @@ const IndexPage: NextPage = () => {
                 </p>
                 <p>
                   <span className="text-md font-bold">Thời gian đánh giá:</span>
-                  <span className="text-sm ml-3">08/10/2020</span>
+                  <span className="text-sm ml-3">{dateSubmitted || 'Chưa có thông tin'}</span>
                 </p>
               </div>
 
