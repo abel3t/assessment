@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import ErrorIcon from '@mui/icons-material/Error';
 
-import { updateQuestionError, updateQuestionValue } from 'slices/assessment-questions.slice';
-import { useAppDispatch } from '../settings/hook';
+import { updateQuestionValue } from 'slices/assessment-questions.slice';
 import { useDispatch } from 'react-redux';
 
 interface RatingQuestionProps {
@@ -16,14 +15,11 @@ interface RatingQuestionProps {
   value?: number
 }
 
-const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, hasError, value: defaultValue }) => {
+const RatingQuestion: React.FC<RatingQuestionProps> = ({ id, title, isRequired, hasError, value }) => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(defaultValue || -1)
 
   const handleChange = (event: any) => {
-    const _value = parseInt(event.target.value);
-    setValue(_value)
-    dispatch(updateQuestionValue({ id, value }));
+    dispatch(updateQuestionValue({ id, value: parseInt(event.target.value) }));
   };
 
   return (
