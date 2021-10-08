@@ -12,7 +12,7 @@ const Information: React.FC<InformationProps> = ({ userAssess }) => {
   const dispatch = useDispatch();
 
   const onChangeUserAssess = (event: any) => {
-    dispatch(updateUserAssess({ ...userAssess, name: event.target?.value || null, hasError: false }));
+    dispatch(updateUserAssess({ ...userAssess, name: event.target?.value || '', hasError: false }));
   };
 
   return (
@@ -29,7 +29,7 @@ const Information: React.FC<InformationProps> = ({ userAssess }) => {
           Người thực hiện đánh giá <span className="text-red-600">*</span>
         </div>
         <div className="w-1/2">
-          <Input placeholder="Your answer" className="w-full" value={userAssess?.name || null} onChange={onChangeUserAssess}/>
+          <Input placeholder="Your answer" className="w-full" value={userAssess?.name || ''} onChange={onChangeUserAssess}/>
         </div>
 
         {

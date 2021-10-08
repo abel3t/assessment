@@ -28,7 +28,7 @@ const AssessmentPage: React.FC = () => {
     const defaultQuestions = JSON.parse(localStorage.getItem('assessment-questions') || 'null');
     const name = localStorage.getItem('assessment-name') || '';
 
-    if (defaultQuestions && defaultQuestions[1]?.type !== 'string') {
+    if (defaultQuestions && typeof defaultQuestions[1]?.type === 'number') {
       dispatch(updateQuestions(defaultQuestions));
     }
 
