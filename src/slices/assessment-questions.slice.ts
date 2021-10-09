@@ -4,13 +4,13 @@ import type { RootState } from 'settings/store';
 import { questions, UserWasAssessedType } from '../constant';
 
 export interface IUserAssess {
-  name: string;
+  name?: string;
   hasError?: boolean;
 }
 
 export interface IUserWasAssessed {
-  name: string;
-  type: UserWasAssessedType,
+  name?: string;
+  type?: UserWasAssessedType,
   hasError?: boolean
 }
 

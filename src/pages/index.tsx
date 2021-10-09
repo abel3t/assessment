@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, ResponsiveContainer, Tooltip } from 'recharts';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,18 +11,31 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { LifeTitle, LifeTitleShort, LifeType } from '../constant';
+import { LifeTitle, LifeTitleShort, LifeType, UserWasAssessedType } from '../constant';
+import { IUserWasAssessed } from '../slices/assessment-questions.slice';
 
 const IndexPage: NextPage = () => {
   const [ result, setResult ]: [ any, any ] = useState(null);
   const [ dateSubmitted, setDateSubmitted ] = useState('');
+  const [ userAssessName, setUserAssessName ]: [ string, any ] = useState('');
+  const [ userWasAssessed, setUserWasAssessed ]: [ IUserWasAssessed, any ] = useState({});
 
   useEffect(() => {
     const date = localStorage.getItem('assessment-dateSubmitted');
     const result: any = JSON.parse(localStorage.getItem('assessment-result') || 'null');
+    const name = localStorage.getItem('assessment-name');
+    const storageUserWasAssessed = JSON.parse(localStorage.getItem('userWasAssessed') || 'null');
 
     if (date) {
       setDateSubmitted(date);
+    }
+
+    if (storageUserWasAssessed) {
+      setUserWasAssessed(storageUserWasAssessed);
+    }
+
+    if (name) {
+      setUserAssessName(name);
     }
 
     if (result) {
@@ -49,10 +62,34 @@ const IndexPage: NextPage = () => {
             <div>
               <p className="text-xl uppercase font-bold">Kết quả đánh giá sức khoẻ đời sống thuộc linh</p>
               <div className="my-2">
-                <p>
-                  <span className="text-md font-bold">Người đánh giá:</span>
-                  <span className="text-sm ml-3">Chính mình</span>
-                </p>
+                {
+                  userWasAssessed?.type !== UserWasAssessedType.Other &&
+                  <p>
+                    <span className="text-md font-bold">Người đánh giá:</span>
+                    {
+                      !!userAssessName &&
+                      <span className="text-sm ml-3 text-bold">Chính mình ({userAssessName})</span>
+                    }
+                    {
+                      !userAssessName &&
+                      <span className="text-sm ml-3 text-bold">Chưa có thông tin</span>
+                    }
+                  </p>
+                }
+
+                {
+                  userWasAssessed?.type === UserWasAssessedType.Other &&
+                  <>
+                    <p>
+                      <span className="text-md font-bold">Người đánh giá:</span>
+                      <span className="text-sm ml-3 text-bold">{userAssessName || 'Chưa có thông tin'}</span>
+                    </p>
+                    <p>
+                      <span className="text-md font-bold">Người được đánh giá:</span>
+                      <span className="text-sm ml-3 text-bold">{userWasAssessed?.name || 'Chưa có thông tin'}</span>
+                    </p>
+                  </>
+                }
                 <p>
                   <span className="text-md font-bold">Thời gian đánh giá:</span>
                   <span className="text-sm ml-3">{dateSubmitted || 'Chưa có thông tin'}</span>
