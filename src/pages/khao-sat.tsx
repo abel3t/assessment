@@ -4,13 +4,17 @@ import { Button, CircularProgress, Dialog, DialogTitle } from '@mui/material';
 import RatingQuestion from 'components/RatingQuestion';
 import { useAppDispatch, useAppSelector } from 'settings/hook';
 import {
+  getQuestions,
   getUserAssess,
+  getUserWasAssessed,
+  IUserWasAssessed,
   updateQuestionError,
-  updateQuestions, updateUserAssess
+  updateQuestions,
+  updateUserAssess,
+  updateUserWasAssessed
 } from 'slices/assessment-questions.slice';
-import { getQuestions } from 'slices/assessment-questions.slice';
 import Information from '../components/Information';
-import { LifeTitle, LifeTitleNote, LifeType } from '../constant';
+import { LifeTitle, LifeTitleNote, LifeType, UserWasAssessedType } from '../constant';
 import ErrorIcon from '@mui/icons-material/Error';
 import request from '../utils/request';
 
@@ -21,6 +25,7 @@ const AssessmentPage: React.FC = () => {
 
   const questions = useAppSelector(getQuestions);
   const userAssess = useAppSelector(getUserAssess);
+  const userWasAssessed: IUserWasAssessed = useAppSelector(getUserWasAssessed);
 
   const dispatch = useAppDispatch();
 
@@ -31,6 +36,7 @@ const AssessmentPage: React.FC = () => {
   useEffect(() => {
     const defaultQuestions = JSON.parse(localStorage.getItem('assessment-questions') || 'null');
     const name = localStorage.getItem('assessment-name') || '';
+    const userWasAssessed = JSON.parse(localStorage.getItem('userWasAssessed') || 'null');
 
     if (defaultQuestions && typeof defaultQuestions[1]?.type === 'number') {
       dispatch(updateQuestions(defaultQuestions));
@@ -38,6 +44,10 @@ const AssessmentPage: React.FC = () => {
 
     if (name) {
       dispatch(updateUserAssess({ name }));
+    }
+
+    if (userWasAssessed) {
+      dispatch(updateUserWasAssessed(userWasAssessed));
     }
   }, []);
 
@@ -51,11 +61,16 @@ const AssessmentPage: React.FC = () => {
       if (!userAssess.name) {
         dispatch(updateUserAssess({ ...userAssess, hasError: true }));
         setShowErrorDialog(true);
-      } else {
-        setCurrentPage(currentPage + 1);
+        return;
       }
 
-      return;
+      if (userWasAssessed.type === UserWasAssessedType.Other && !userWasAssessed.name) {
+        dispatch(updateUserWasAssessed({ ...userWasAssessed, hasError: true }));
+        setShowErrorDialog(true);
+        return;
+      }
+
+      setCurrentPage(currentPage + 1);
     }
 
     let hasError = false;
@@ -93,12 +108,13 @@ const AssessmentPage: React.FC = () => {
       }
     });
 
-    if (!hasError && userAssess.name) {
+    if (!hasError && userAssess.name && userWasAssessed.name) {
       let date = new Date().toLocaleString('vi-VN');
       localStorage.setItem('assessment-questions', JSON.stringify(questions));
       localStorage.setItem('assessment-result', JSON.stringify(result));
       localStorage.setItem('assessment-name', userAssess.name);
       localStorage.setItem('assessment-dateSubmitted', date);
+      localStorage.setItem('userWasAssessed', JSON.stringify(userWasAssessed));
 
       const data: any = Object.values(result).reduce((acc: any, current: any) => {
         acc[current.type] = {
@@ -116,7 +132,11 @@ const AssessmentPage: React.FC = () => {
         fellowship: data[LifeType.Fellowship]?.mark,
         ministry: data[LifeType.Ministry]?.mark,
         evangelism: data[LifeType.Evangelism]?.mark,
-        date
+        date,
+        userWasAssessed: {
+          name: userWasAssessed.name,
+          type: userWasAssessed.type === UserWasAssessedType.Self ? 'Self' : 'Other'
+        }
       })
         .then((response: any) => {
           console.log(response.data?.data);
@@ -137,7 +157,7 @@ const AssessmentPage: React.FC = () => {
         {
           !currentPage && (
             <div>
-              <Information userAssess={userAssess}/>
+              <Information userAssess={userAssess} userWasAssessed={userWasAssessed}/>
             </div>
           )
         }

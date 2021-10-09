@@ -13,6 +13,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from 'settings/theme';
 import createEmotionCache from 'settings/emotion-cache';
 import { store } from 'settings/store';
+import Layout from '../layouts';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -32,7 +33,9 @@ export default function MyApp(props: MyAppProps) {
         <CssBaseline />
         <div style={{backgroundColor: "#E2EFE0", minHeight: '100vh'}}>
           <Provider store={store}>
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </Provider>
         </div>
       </ThemeProvider>

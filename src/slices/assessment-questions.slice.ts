@@ -1,14 +1,23 @@
-import {
-  createSlice,
-  PayloadAction
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from 'settings/store';
-import { questions } from '../constant';
+import { questions, UserWasAssessedType } from '../constant';
+
+export interface IUserAssess {
+  name: string;
+  hasError?: boolean;
+}
+
+export interface IUserWasAssessed {
+  name: string;
+  type: UserWasAssessedType,
+  hasError?: boolean
+}
 
 export type AssessmentQuestionState = {
   questions: any,
-  userAssess: Record<string, any>
+  userAssess: IUserAssess,
+  userWasAssessed: IUserWasAssessed
 };
 
 const initialState: AssessmentQuestionState = {
@@ -16,7 +25,8 @@ const initialState: AssessmentQuestionState = {
     acc[question.id] = { ...question };
     return acc;
   }, {}),
-  userAssess: {}
+  userAssess: { name: '' },
+  userWasAssessed: { name: '', type: UserWasAssessedType.Self }
 };
 
 export const assessmentQuestionSlice = createSlice({
@@ -40,6 +50,9 @@ export const assessmentQuestionSlice = createSlice({
     },
     updateUserAssess: (state, action: PayloadAction<any>) => {
       state.userAssess = action.payload;
+    },
+    updateUserWasAssessed: (state, action: PayloadAction<any>) => {
+      state.userWasAssessed = action.payload;
     }
   }
 });
@@ -48,10 +61,12 @@ export const {
   updateQuestionValue,
   updateQuestionError,
   updateQuestions,
-  updateUserAssess
+  updateUserAssess,
+  updateUserWasAssessed
 } = assessmentQuestionSlice.actions;
 
 export const getQuestions = (state: RootState) => state.assessmentQuestion.questions;
 export const getUserAssess = (state: RootState) => state.assessmentQuestion.userAssess;
+export const getUserWasAssessed = (state: RootState) => state.assessmentQuestion.userWasAssessed as IUserWasAssessed;
 
 export default assessmentQuestionSlice.reducer;

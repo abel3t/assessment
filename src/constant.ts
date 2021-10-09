@@ -31,12 +31,12 @@ export const LifeTitleNote = {
 };
 
 export enum UserWasAssessedType {
-  Myself,
+  Self,
   Other
 }
 
 export const UserWasAssessedTitle = {
-  [UserWasAssessedType.Myself]: 'Chính tôi',
+  [UserWasAssessedType.Self]: 'Chính tôi',
   [UserWasAssessedType.Other]: 'Người khác, điền tên'
 };
 
