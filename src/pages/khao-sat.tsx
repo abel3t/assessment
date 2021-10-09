@@ -97,6 +97,10 @@ const AssessmentPage: React.FC = () => {
 
   const onClickSubmit = () => {
     setIsSubmit(true);
+    if (userWasAssessed.type === UserWasAssessedType.Self) {
+      dispatch(updateUserWasAssessed({ ...userWasAssessed, name: userAssess?.name }));
+    }
+
     let hasError = false;
     let result: any = {};
     Object.values(questions).forEach((question: any) => {
@@ -116,7 +120,8 @@ const AssessmentPage: React.FC = () => {
       localStorage.setItem('assessment-result', JSON.stringify(result));
       localStorage.setItem('assessment-name', name);
       localStorage.setItem('assessment-dateSubmitted', date);
-      localStorage.setItem('userWasAssessed', JSON.stringify({ ...userWasAssessed, name: trimString(userWasAssessed.name) }));
+      localStorage.setItem('userWasAssessed',
+        JSON.stringify({ ...userWasAssessed, name: trimString(userWasAssessed.name) }));
 
       const data: any = Object.values(result).reduce((acc: any, current: any) => {
         acc[current.type] = {

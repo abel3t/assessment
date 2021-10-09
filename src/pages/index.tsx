@@ -11,6 +11,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Skeleton from '@mui/material/Skeleton';
+
 import { LifeTitle, LifeTitleShort, LifeType, UserWasAssessedType } from '../constant';
 import { IUserWasAssessed } from '../slices/assessment-questions.slice';
 
@@ -19,6 +21,7 @@ const IndexPage: NextPage = () => {
   const [ dateSubmitted, setDateSubmitted ] = useState('');
   const [ userAssessName, setUserAssessName ]: [ string, any ] = useState('');
   const [ userWasAssessed, setUserWasAssessed ]: [ IUserWasAssessed, any ] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const date = localStorage.getItem('assessment-dateSubmitted');
@@ -50,14 +53,23 @@ const IndexPage: NextPage = () => {
 
       setResult(Object.values(data));
     }
+
+    setIsLoaded(true);
   }, []);
 
   return (
     <div className="p-2 sm:p-3 md:p-4 lg:p-5 flex flex-col justify-center items-center">
       <div className="w-full md:w-3/4 lg:w-2/3 p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white">
-        {!result && <div className="mb-2"> Chưa có kết quả</div>}
+        {!isLoaded && <div className="mb-3">
+          <Skeleton variant="rectangular" height={20}  className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
+          <Skeleton variant="rectangular" height={50}  className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
+          <Skeleton variant="rectangular" height={150} className="mt-1 w-full md:w-3/4 lg:w-2/3" />
+          <Skeleton variant="rectangular" height={100} className="mt-1 w-full md:w-3/4 lg:w-2/3" />
+        </div>}
+        {isLoaded && !result && <div className="mb-5">
+          Chưa có kết quả. Làm khảo sát ngay nhé!</div>}
 
-        {result && (
+        {isLoaded && result && (
           <div>
             <div>
               <p className="text-xl uppercase font-bold">Kết quả đánh giá sức khoẻ đời sống thuộc linh</p>
