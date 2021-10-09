@@ -15,7 +15,7 @@ import { LifeTitle, LifeTitleShort, LifeType } from '../constant';
 
 const IndexPage: NextPage = () => {
   const [ result, setResult ]: [ any, any ] = useState(null);
-  const [dateSubmitted, setDateSubmitted] = useState('');
+  const [ dateSubmitted, setDateSubmitted ] = useState('');
 
   useEffect(() => {
     const date = localStorage.getItem('assessment-dateSubmitted');
@@ -74,15 +74,15 @@ const IndexPage: NextPage = () => {
                     {result
                       .sort((a: any, b: any) => b.mark - a.mark)
                       .map((row: any, index: number) => (
-                      <TableRow
-                        key={index}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell align="left">{LifeTitle[row.type as LifeType]}</TableCell>
-                        <TableCell align="left">{row.mark}</TableCell>
-                        <TableCell align="left">{Advise(row.mark)}</TableCell>
-                      </TableRow>
-                    ))}
+                        <TableRow
+                          key={index}
+                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                          <TableCell align="left">{LifeTitle[row.type as LifeType]}</TableCell>
+                          <TableCell align="left">{row.mark}</TableCell>
+                          <TableCell align="left">{Advise(row.mark)}</TableCell>
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -90,7 +90,8 @@ const IndexPage: NextPage = () => {
             </div>
             <div className="mt-3" id="chart-result">
               <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={result.map((x: any) => ({...x, type: LifeTitleShort[x.type as LifeType] }))}>
+                <RadarChart cx="50%" cy="50%" outerRadius="80%"
+                            data={result.map((x: any) => ({ ...x, type: LifeTitleShort[x.type as LifeType] }))}>
                   <PolarGrid/>
                   <PolarAngleAxis dataKey="type" fontSize="10"/>
                   <PolarRadiusAxis domain={[ 0, 35 ]}/>

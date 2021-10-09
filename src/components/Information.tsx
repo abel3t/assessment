@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormControlLabel, Input, Radio, RadioGroup } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 
-import { getUserWasAssessed, updateUserAssess, updateUserWasAssessed } from 'slices/assessment-questions.slice';
+import { updateUserAssess, updateUserWasAssessed } from 'slices/assessment-questions.slice';
 import HangoutImage from '../../public/hangout.png';
 import { UserWasAssessedTitle, UserWasAssessedType } from '../constant';
 
@@ -17,11 +17,12 @@ const Information: React.FC<InformationProps> = ({ userAssess, userWasAssessed }
   const dispatch = useDispatch();
 
   const onChangeUserAssess = (event: any) => {
-    dispatch(updateUserAssess({ ...userAssess, name: event.target?.value || '', hasError: false }));
+    dispatch(updateUserAssess({ ...userAssess, name: event.target?.value, hasError: false }));
   };
 
   const onChangeUserWasAssessed = (event: any) => {
-    dispatch(updateUserWasAssessed({ ...userWasAssessed, name: event.target?.value || '', hasError: false }));
+    dispatch(
+      updateUserWasAssessed({ ...userWasAssessed, name: event.target?.value || '', hasError: false }));
   };
 
   const onChangeUserWasAssessedType = (event: any) => {
@@ -40,7 +41,7 @@ const Information: React.FC<InformationProps> = ({ userAssess, userWasAssessed }
       <div className={`p-2 md:p-3 lg:p-4 mb-3 border-gray-400 rounded-lg bg-white ${userAssess?.hasError &&
       'border border-red-500'}`}>
         <div className="text-lg mb-2">
-          Người thực hiện đánh giá<span className="text-red-600">*</span>
+          Người thực hiện đánh giá <span className="text-red-600">*</span>
         </div>
         <div className="w-3/4 md:w-2/3">
           <Input autoFocus={true} placeholder="Your answer" className="w-full" value={userAssess?.name || ''}

@@ -1,5 +1,5 @@
 import '../../styles/globals.css';
-import 'tailwindcss/tailwind.css'
+import 'tailwindcss/tailwind.css';
 
 import { Provider } from 'react-redux';
 
@@ -27,11 +27,11 @@ export default function MyApp(props: MyAppProps) {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>Spiritual Heath Assessment</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
       </Head>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div style={{backgroundColor: "#E2EFE0", minHeight: '100vh'}}>
+        <CssBaseline/>
+        <div style={{ backgroundColor: '#E2EFE0', minHeight: '100vh' }}>
           <Provider store={store}>
             <Layout>
               <Component {...pageProps} />

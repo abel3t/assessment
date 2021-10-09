@@ -17,6 +17,7 @@ import Information from '../components/Information';
 import { LifeTitle, LifeTitleNote, LifeType, UserWasAssessedType } from '../constant';
 import ErrorIcon from '@mui/icons-material/Error';
 import request from '../utils/request';
+import { trimString } from '../utils/shared';
 
 const AssessmentPage: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState(0);
@@ -110,11 +111,12 @@ const AssessmentPage: React.FC = () => {
 
     if (!hasError && userAssess.name && userWasAssessed.name) {
       let date = new Date().toLocaleString('vi-VN');
+      const name = trimString(userAssess.name);
       localStorage.setItem('assessment-questions', JSON.stringify(questions));
       localStorage.setItem('assessment-result', JSON.stringify(result));
-      localStorage.setItem('assessment-name', userAssess.name);
+      localStorage.setItem('assessment-name', name);
       localStorage.setItem('assessment-dateSubmitted', date);
-      localStorage.setItem('userWasAssessed', JSON.stringify(userWasAssessed));
+      localStorage.setItem('userWasAssessed', JSON.stringify({ ...userWasAssessed, name: trimString(userWasAssessed.name) }));
 
       const data: any = Object.values(result).reduce((acc: any, current: any) => {
         acc[current.type] = {
@@ -126,7 +128,7 @@ const AssessmentPage: React.FC = () => {
       }, {});
 
       request.post('api/sheet', {
-        name: userAssess.name,
+        name,
         worship: data[LifeType.Worship]?.mark,
         discipleship: data[LifeType.Discipleship]?.mark,
         fellowship: data[LifeType.Fellowship]?.mark,
@@ -134,7 +136,7 @@ const AssessmentPage: React.FC = () => {
         evangelism: data[LifeType.Evangelism]?.mark,
         date,
         userWasAssessed: {
-          name: userWasAssessed.name,
+          name: trimString(userWasAssessed.name),
           type: userWasAssessed.type === UserWasAssessedType.Self ? 'Self' : 'Other'
         }
       })
