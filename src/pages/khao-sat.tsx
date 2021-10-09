@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Dialog, DialogTitle } from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogTitle } from '@mui/material';
 
 import RatingQuestion from 'components/RatingQuestion';
 import { useAppDispatch, useAppSelector } from 'settings/hook';
@@ -17,6 +17,7 @@ import request from '../utils/request';
 const AssessmentPage: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState(0);
   const [ showErrorDialog, setShowErrorDialog ] = useState(false);
+  const [ isSubmit, setIsSubmit ] = useState(false);
 
   const questions = useAppSelector(getQuestions);
   const userAssess = useAppSelector(getUserAssess);
@@ -45,6 +46,7 @@ const AssessmentPage: React.FC = () => {
   };
 
   const onClickNext = () => {
+    setIsSubmit(false);
     if (!currentPage) {
       if (!userAssess.name) {
         dispatch(updateUserAssess({ ...userAssess, hasError: true }));
@@ -78,6 +80,7 @@ const AssessmentPage: React.FC = () => {
   };
 
   const onClickSubmit = () => {
+    setIsSubmit(true);
     let hasError = false;
     let result: any = {};
     Object.values(questions).forEach((question: any) => {
@@ -121,7 +124,7 @@ const AssessmentPage: React.FC = () => {
         })
         .catch((error: any) => {
           console.log(error?.response?.data);
-          alert('Oops! Something went wrong!')
+          alert('Oops! Something went wrong!');
         });
     } else {
       setShowErrorDialog(true);
@@ -175,15 +178,16 @@ const AssessmentPage: React.FC = () => {
       <div className="w-full md:w-3/4 lg:w-2/3">
         {
           !currentPage && (
-            <Button variant="contained" onClick={onClickNext}>Next</Button>
+            <Button variant="contained" onClick={onClickNext} sx={{ height: 35, minWidth: 60 }}>Next</Button>
           )
         }
 
         {
           currentPage > 0 && currentPage < 5 && (
             <>
-              <Button variant="contained" onClick={onClickPrev}>Prev</Button>
-              <Button variant="contained" onClick={onClickNext} style={{ marginLeft: 10 }}>Next</Button>
+              <Button variant="contained" onClick={onClickPrev} sx={{ height: 35, minWidth: 60 }}>Prev</Button>
+              <Button variant="contained" onClick={onClickNext}
+                      style={{ marginLeft: 10, height: 35, minWidth: 60 }}>Next</Button>
             </>
           )
         }
@@ -191,8 +195,11 @@ const AssessmentPage: React.FC = () => {
         {
           currentPage == 5 && (
             <>
-              <Button variant="contained" onClick={onClickPrev}>Prev</Button>
-              <Button variant="contained" onClick={onClickSubmit} style={{ marginLeft: 10 }}>Submit</Button>
+              <Button variant="contained" onClick={onClickPrev} sx={{ height: 35, minWidth: 60 }}>Prev</Button>
+              <Button variant="contained" onClick={onClickSubmit} style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
+                {isSubmit && <CircularProgress sx={{ color: '#fff' }} size={25}/>}
+                {!isSubmit && 'Submit'}
+              </Button>
             </>
           )
         }
