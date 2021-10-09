@@ -20,9 +20,9 @@ async function handler(req: any, res: any) {
   });
 
   if (req.method === 'POST') {
-    const { name, worship, discipleship, fellowship, missionary, evangelism, date } = req.body;
+    const { name, worship, discipleship, fellowship, ministry, evangelism, date } = req.body;
 
-    if (!name || !worship || !discipleship || !fellowship || !missionary || !evangelism || !date) {
+    if (!name || !worship || !discipleship || !fellowship || !ministry || !evangelism || !date) {
       return res.status(400).json({ status: 'Failed!' });
     }
 
@@ -31,7 +31,7 @@ async function handler(req: any, res: any) {
       valueInputOption: 'USER_ENTERED',
       range: 'Sheet1',
       requestBody: {
-        values: [ [ name, worship, discipleship, fellowship, missionary, evangelism, date ] ]
+        values: [ [ name, worship, discipleship, fellowship, ministry, evangelism, date ] ]
       }
     });
 

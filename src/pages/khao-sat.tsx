@@ -10,7 +10,7 @@ import {
 } from 'slices/assessment-questions.slice';
 import { getQuestions } from 'slices/assessment-questions.slice';
 import Information from '../components/Information';
-import { LifeTitleNote, LifeType } from '../constant';
+import { LifeTitle, LifeTitleNote, LifeType } from '../constant';
 import ErrorIcon from '@mui/icons-material/Error';
 import request from '../utils/request';
 
@@ -111,7 +111,7 @@ const AssessmentPage: React.FC = () => {
         worship: data[LifeType.Worship]?.mark,
         discipleship: data[LifeType.Discipleship]?.mark,
         fellowship: data[LifeType.Fellowship]?.mark,
-        missionary: data[LifeType.Missionary]?.mark,
+        ministry: data[LifeType.Ministry]?.mark,
         evangelism: data[LifeType.Evangelism]?.mark,
         date
       })
@@ -145,7 +145,7 @@ const AssessmentPage: React.FC = () => {
               <div className="w-full bg-white mb-2 border-gray-400 rounded-lg">
                 <div className="text-2xl md:text-3xl text-center text-white rounded-t-lg border-green-100 py-3"
                      style={{ backgroundColor: '#3D8F2E' }}>
-                  Khảo sát sức khoẻ thuộc linh
+                  {LifeTitle[currentPage - 1 as LifeType]}
                 </div>
                 <div className="p-2 md:p-3 lg:p-4 text-sm">
                   {LifeTitleNote[currentPage - 1 as LifeType]}

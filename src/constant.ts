@@ -2,7 +2,7 @@ export enum LifeType {
   Worship,
   Discipleship,
   Fellowship,
-  Missionary,
+  Ministry,
   Evangelism
 }
 
@@ -10,7 +10,7 @@ export const LifeTitle = {
   [LifeType.Worship]: 'Đời sống thờ phượng',
   [LifeType.Discipleship]: 'Đời sống môn đồ hoá',
   [LifeType.Fellowship]: 'Đời sống thông công',
-  [LifeType.Missionary]: 'Đời sống phục vụ',
+  [LifeType.Ministry]: 'Đời sống phục vụ',
   [LifeType.Evangelism]: 'Đời sống truyền giáo'
 };
 
@@ -18,7 +18,7 @@ export const LifeTitleShort = {
   [LifeType.Worship]: 'Thờ phượng',
   [LifeType.Discipleship]: 'Môn đồ hoá',
   [LifeType.Fellowship]: 'Thông công',
-  [LifeType.Missionary]: 'Phục vụ',
+  [LifeType.Ministry]: 'Phục vụ',
   [LifeType.Evangelism]: 'Truyền giáo'
 };
 
@@ -26,7 +26,7 @@ export const LifeTitleNote = {
   [LifeType.Worship]: 'Đời sống thờ phượng hiểu theo cách đơn giản nhất là chất lượng mối quan hệ giữa bạn với Chúa Jêsus.',
   [LifeType.Discipleship]: 'Đời sống môn đồ hóa hiểu đơn giản nhất là hành trình bạn tin Chúa và trở nên giống Chúa Jêsus càng hơn mỗi ngày.',
   [LifeType.Fellowship]: 'Đời sống thông công hiểu theo cách đơn giản nhất là chất lượng trong mối quan hệ của bạn với anh chị em trong Chúa.',
-  [LifeType.Missionary]: 'Đời sống phục vụ hiểu theo cách đơn giản nhất là việc sử dụng kiến thức, kỹ năng, ân tứ để làm ích cho người khác, cho nhóm nhỏ, cho Hội Thánh.',
+  [LifeType.Ministry]: 'Đời sống phục vụ hiểu theo cách đơn giản nhất là việc sử dụng kiến thức, kỹ năng, ân tứ để làm ích cho người khác, cho nhóm nhỏ, cho Hội Thánh.',
   [LifeType.Evangelism]: 'Đời sống truyền giáo hiểu theo cách đơn giản nhất là việc quan tâm đến những người chưa biết về Chúa Jêsus xung quanh mình và tìm cách để họ được biết và tin nhận Chúa Jêsus.'
 };
 
@@ -170,43 +170,43 @@ export const questions = [
   {
     id: 22,
     title: 'Tôi thường xuyên và sẵn sàng dành thời gian để phục vụ Chúa, anh chị em, nhóm nhỏ, Hội Thánh',
-    type: LifeType.Missionary,
+    type: LifeType.Ministry,
     isRequired: true
   },
   {
     id: 23,
     title: 'Tôi đang có vai trò, đang phục vụ Chúa đúng với những ấn tứ, sự thôi thúc Chúa ban cho tôi\n',
-    type: LifeType.Missionary,
+    type: LifeType.Ministry,
     isRequired: true
   },
   {
     id: 24,
     title: 'Tôi luôn quan tâm rằng đời sống của mình đang mang lại ích lợi thế nào cho Vương Quốc của Chúa (Hội Thánh)',
-    type: LifeType.Missionary,
+    type: LifeType.Ministry,
     isRequired: true
   },
   {
     id: 25,
     title: 'Tôi luôn suy nghĩ, tìm cách để phục vụ hiệu quả hơn với những khả năng, ân tứ, kỹ năng Chúa ban cho mình',
-    type: LifeType.Missionary,
+    type: LifeType.Ministry,
     isRequired: true
   },
   {
     id: 26,
     title: 'Tôi thích việc phục vụ người khác (đáp ứng nhu cầu của người khác) mà không đòi hỏi nhận lại điều gì',
-    type: LifeType.Missionary,
+    type: LifeType.Ministry,
     isRequired: true
   },
   {
     id: 27,
     title: 'Những anh em biết tôi sẽ đồng ý rằng đời sống của tôi là đời sống ban cho nhiều hơn nhận lãnh',
-    type: LifeType.Missionary,
+    type: LifeType.Ministry,
     isRequired: true
   },
   {
     id: 28,
     title: 'Tôi thấy những gì mình có, kể cả những kinh nghiệm, những thất bại, lời chứng, nỗi đau,... đều là cơ hội để tôi giúp đỡ người khác',
-    type: LifeType.Missionary,
+    type: LifeType.Ministry,
     isRequired: true
   },
   {
