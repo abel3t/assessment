@@ -145,6 +145,7 @@ const AssessmentPage: React.FC = () => {
         .catch((error: any) => {
           console.log(error?.response?.data);
           alert('Oops! Something went wrong!');
+          setIsSubmit(false);
         });
     } else {
       setShowErrorDialog(true);
