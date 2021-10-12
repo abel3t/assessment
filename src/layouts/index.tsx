@@ -5,26 +5,26 @@ import { CircularProgress } from '@mui/material';
 const Layout: React.FC = ({ children }) => {
   const [ isLoading, setIsLoading ] = useState(false);
 
-	useEffect(() => {
-		setIsLoading(true);	
-	}, []);
-
-
   useEffect(() => {
-    const updateLoadingStatus = () => setIsLoading(true);
-
-    Router.events.on('routeChangeStart', updateLoadingStatus);
-    Router.events.on('routeChangeComplete', updateLoadingStatus);
+    Router.events.on('routeChangeStart', () => setIsLoading(true));
+    Router.events.on('routeChangeComplete', () => setIsLoading(false));
 
     return () => {
-      Router.events.off('routeChangeStart', updateLoadingStatus);
-      Router.events.off('routeChangeComplete', updateLoadingStatus);
+      Router.events.off('routeChangeStart', () => setIsLoading(true));
+      Router.events.off('routeChangeComplete', () => setIsLoading(false));
     };
   }, [ isLoading ]);
 
   return (
     <>
-		  {children}
+      {
+        isLoading ?
+          <div className="flex items-center justify-center w-full" style={{ minHeight: '100vh' }}>
+            <CircularProgress size={70}/>
+          </div>
+          : children
+      }
+
     </>
   );
 };
