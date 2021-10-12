@@ -64,6 +64,7 @@ const IndexPage: NextPage = () => {
           <Skeleton variant="rectangular" height={20}  className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
           <Skeleton variant="rectangular" height={50}  className="mt-1 w-full md:w-3/4 lg:w-2/3"/>
           <Skeleton variant="rectangular" height={150} className="mt-1 w-full md:w-3/4 lg:w-2/3" />
+          <Skeleton variant="rectangular" height={150} className="mt-1 w-full md:w-3/4 lg:w-2/3" />
           <Skeleton variant="rectangular" height={100} className="mt-1 w-full md:w-3/4 lg:w-2/3" />
         </div>}
         {isLoaded && !result && <div className="mb-5">

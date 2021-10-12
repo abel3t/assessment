@@ -109,7 +109,7 @@ export const questions = [
   },
   {
     id: 12,
-    title: 'Khi bị cám dỗ để hành động theo bản năng của mình, tôi có thể đăng ra quyết định làm theo điều mình biết Chúa đẹp lòng',
+    title: 'Khi bị cám dỗ để hành động theo bản năng của mình, tôi có thể quyết định làm theo điều mình biết Chúa đẹp lòng',
     type: LifeType.Discipleship,
     isRequired: true
   },
