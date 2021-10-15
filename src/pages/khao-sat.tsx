@@ -121,7 +121,7 @@ const AssessmentPage: React.FC = () => {
       localStorage.setItem('assessment-name', name);
       localStorage.setItem('assessment-dateSubmitted', date);
       localStorage.setItem('userWasAssessed',
-        JSON.stringify({ ...userWasAssessed, name: trimString(userWasAssessed.name) }));
+        JSON.stringify({ ...userWasAssessed, name: trimString(userWasAssessed.name || '') }));
 
       const data: any = Object.values(result).reduce((acc: any, current: any) => {
         acc[current.type] = {
@@ -141,7 +141,7 @@ const AssessmentPage: React.FC = () => {
         evangelism: data[LifeType.Evangelism]?.mark,
         date,
         userWasAssessed: {
-          name: trimString(userWasAssessed.name),
+          name: trimString(userWasAssessed.name || ''),
           type: userWasAssessed.type === UserWasAssessedType.Self ? 'Self' : 'Other'
         }
       })
