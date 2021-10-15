@@ -113,7 +113,7 @@ const AssessmentPage: React.FC = () => {
       }
     });
 
-    if (!hasError && userAssess.name && userWasAssessed.name) {
+    if (!hasError && userAssess.name) {
       let date = new Date().toLocaleString('vi-VN');
       const name = trimString(userAssess.name);
       localStorage.setItem('assessment-questions', JSON.stringify(questions));
@@ -224,10 +224,16 @@ const AssessmentPage: React.FC = () => {
           currentPage == 5 && (
             <>
               <Button variant="contained" onClick={onClickPrev} sx={{ height: 35, minWidth: 60 }}>Prev</Button>
-              <Button variant="contained" onClick={onClickSubmit} style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
-                {isSubmit && <CircularProgress sx={{ color: '#fff' }} size={25}/>}
-                {!isSubmit && 'Submit'}
-              </Button>
+              {
+                isSubmit && <Button variant="contained" style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
+                  <CircularProgress sx={{ color: '#fff' }} size={25}/>
+                </Button>
+              }
+              {
+                !isSubmit && <Button variant="contained" onClick={onClickSubmit} style={{ marginLeft: 15, height: 35, minWidth: 90 }}>
+                  Submit
+                </Button>
+              }
             </>
           )
         }
